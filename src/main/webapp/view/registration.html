@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>authentication</title>
+    </head>
+    <body>
+        <form method="post" action="/registration">
+              <h1>Create your account</h1>
+
+              <p>
+                <label for="login">Login</label>
+                <input type="text" required id="login" name="login" placeholder="login"/>
+              </p>
+
+
+              <p>
+                <label for="password">Password</label>
+                <input type="password" required id="password" name="password" placeholder="password"/>
+              </p>
+
+              <p>
+                <button type="submit">Sign in</button>
+              </p>
+
+
+              <div class="text-center">
+                <p>
+                  Already have an account? <a href="/view/login.html">Sign up</a>
+                </p>
+              </div>
+        </form>
+    </body>
+</html>
