@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 WeatherSessionDTO session = optionalWeatherSessionDTO.get();
                 log.info("Session created: {}", session.getId());
 
-                Cookie cookie = new Cookie("session", session.getId().toString());
+                Cookie cookie = new Cookie("sessionId", session.getId().toString());
                 resp.addCookie(cookie);
                 log.info("Cookie created: {}", cookie.getValue());
 
