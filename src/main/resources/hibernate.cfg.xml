@@ -14,7 +14,8 @@
     <property name="format_sql">true</property>
 
     <mapping class="maxim.butenko.weather.entity.User"/>
-   
+    <mapping class="maxim.butenko.weather.entity.WeatherSession"/>
+
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>
