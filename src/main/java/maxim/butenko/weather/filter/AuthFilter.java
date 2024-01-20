@@ -5,6 +5,7 @@ import maxim.butenko.weather.dto.UserDTO;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,11 +42,18 @@ public class AuthFilter implements Filter {
     }
 
     private boolean isExcludedUrl(String uri) {
-        return EXCLUDED_URLS.stream().anyMatch(uri::startsWith);
+        return EXCLUDED_URLS.stream().anyMatch(uri::contains);
     }
 
     private boolean isUserLoggedIn(HttpServletRequest req) {
-        UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        return nonNull(user);
+        Cookie[] cookies = req.getCookies();
+        if (nonNull(cookies)) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("sessionId")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
