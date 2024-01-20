@@ -36,8 +36,8 @@ public class AuthFilter implements Filter {
             log.info("Allowing access to: {}", uri);
                 filterChain.doFilter(req, resp);
         } else {
-            log.info("Redirecting to login from URI: {}", uri);
-            resp.sendRedirect(LOGIN);
+            log.info("Redirecting to previous page from URI: {}", uri);
+            reject(req, resp);
         }
     }
 
@@ -55,5 +55,10 @@ public class AuthFilter implements Filter {
             }
         }
         return false;
+    }
+
+    private void reject(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        var prevPage = req.getHeader("referer");
+        resp.sendRedirect(prevPage != null ? prevPage : LOGIN);
     }
 }
