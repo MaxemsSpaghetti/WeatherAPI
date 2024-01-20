@@ -3,7 +3,7 @@ package maxim.butenko.weather.servlet;
 import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
 import maxim.butenko.weather.service.WeatherSessionService;
-import maxim.butenko.weather.utils.UrlPath;
+import maxim.butenko.weather.util.UrlPath;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

@@ -1,4 +1,4 @@
-package maxim.butenko.weather.utils;
+package maxim.butenko.weather.util;
 
 public class UrlPath {
 

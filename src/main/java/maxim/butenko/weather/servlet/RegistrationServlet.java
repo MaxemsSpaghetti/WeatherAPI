@@ -4,11 +4,10 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
-import maxim.butenko.weather.entity.WeatherSession;
 import maxim.butenko.weather.service.UserService;
 import maxim.butenko.weather.service.WeatherSessionService;
-import maxim.butenko.weather.utils.HtmlHelper;
-import maxim.butenko.weather.utils.UrlPath;
+import maxim.butenko.weather.util.HtmlHelper;
+import maxim.butenko.weather.util.UrlPath;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.Optional;
 
 @Slf4j

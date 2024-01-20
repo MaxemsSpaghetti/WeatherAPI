@@ -1,4 +1,4 @@
-package maxim.butenko.weather.utils;
+package maxim.butenko.weather.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.dto.UserDTO;
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;
-import static maxim.butenko.weather.utils.UrlPath.LOGIN;
-import static maxim.butenko.weather.utils.UrlPath.REGISTRATION;
+import static maxim.butenko.weather.util.UrlPath.LOGIN;
+import static maxim.butenko.weather.util.UrlPath.REGISTRATION;
 @Slf4j
 @WebFilter("/*")
 public class AuthFilter implements Filter {

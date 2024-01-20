@@ -1,4 +1,4 @@
-package maxim.butenko.weather.exceptions;
+package maxim.butenko.weather.exception;
 
 import lombok.Value;
 

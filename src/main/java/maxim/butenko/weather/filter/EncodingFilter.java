@@ -1,4 +1,4 @@
-package maxim.butenko.weather.utils;
+package maxim.butenko.weather.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;

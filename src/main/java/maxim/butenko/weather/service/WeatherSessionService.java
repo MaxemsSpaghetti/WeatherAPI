@@ -5,13 +5,11 @@ import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
 import maxim.butenko.weather.entity.User;
 import maxim.butenko.weather.entity.WeatherSession;
-import maxim.butenko.weather.utils.CustomMapper;
+import maxim.butenko.weather.util.CustomMapper;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.modelmapper.Converters.Collection.map;
 
 public class WeatherSessionService {
 

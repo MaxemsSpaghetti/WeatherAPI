@@ -3,7 +3,7 @@ package maxim.butenko.weather.dao;
 import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.entity.Role;
 import maxim.butenko.weather.entity.User;
-import maxim.butenko.weather.utils.HibernateConnection;
+import maxim.butenko.weather.util.HibernateConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

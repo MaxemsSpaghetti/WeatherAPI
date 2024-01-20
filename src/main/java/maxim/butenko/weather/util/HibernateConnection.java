@@ -1,4 +1,4 @@
-package maxim.butenko.weather.utils;
+package maxim.butenko.weather.util;
 
 import maxim.butenko.weather.entity.User;
 import org.hibernate.HibernateException;

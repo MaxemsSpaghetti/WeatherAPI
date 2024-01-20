@@ -13,8 +13,8 @@ import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
 import maxim.butenko.weather.service.WeatherSessionService;
 import maxim.butenko.weather.service.UserService;
-import maxim.butenko.weather.utils.HtmlHelper;
-import maxim.butenko.weather.utils.UrlPath;
+import maxim.butenko.weather.util.HtmlHelper;
+import maxim.butenko.weather.util.UrlPath;
 
 import java.io.IOException;
 import java.util.Optional;

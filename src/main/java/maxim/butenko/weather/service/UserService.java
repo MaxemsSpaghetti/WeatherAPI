@@ -4,7 +4,7 @@ import maxim.butenko.weather.dao.UserDAO;
 import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.entity.Role;
 import maxim.butenko.weather.entity.User;
-import maxim.butenko.weather.utils.CustomMapper;
+import maxim.butenko.weather.util.CustomMapper;
 
 import java.util.Optional;
 
