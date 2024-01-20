@@ -24,16 +24,17 @@ public class SessionDAO {
     }
 
     public Optional<WeatherSession> add(WeatherSession session) {
-        Session session1 = sessionFactory.getCurrentSession();
-        try (session1) {
-            session1.beginTransaction();
-            session1.save(session);
-            session1.getTransaction().commit();
+        Session hibernateSession = sessionFactory.getCurrentSession();
+
+        try {
+            hibernateSession.beginTransaction();
+            hibernateSession.persist(session);
+            hibernateSession.getTransaction().commit();
 
             return Optional.of(session);
         } catch (Exception e) {
             log.error("An error occurred while adding session: {}", e.getMessage(), e);
-            session1.getTransaction().rollback();
+            hibernateSession.getTransaction().rollback();
         }
 
         return Optional.empty();
@@ -42,8 +43,7 @@ public class SessionDAO {
     public Optional<WeatherSession> findById(UUID id) {
         Session session = sessionFactory.getCurrentSession();
 
-        try (session) {
-
+        try {
             session.beginTransaction();
             WeatherSession weatherSession = session.get(WeatherSession.class, id);
             session.getTransaction().commit();
@@ -54,17 +54,18 @@ public class SessionDAO {
             log.error("An error occurred while finding session by id: {}", e.getMessage(), e);
             session.getTransaction().rollback();
         }
+
         return Optional.empty();
     }
 
     public void delete(UUID id) {
         Session session = sessionFactory.getCurrentSession();
 
-        try (session) {
-
+        try {
             session.beginTransaction();
             WeatherSession weatherSession = session.get(WeatherSession.class, id);
             session.delete(weatherSession);
+
             session.getTransaction().commit();
 
         } catch (Exception e) {
