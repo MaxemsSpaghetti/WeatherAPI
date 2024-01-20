@@ -1,5 +1,6 @@
 package maxim.butenko.weather.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.dto.UserDTO;
 
 import javax.servlet.*;
@@ -13,7 +14,7 @@ import java.util.Set;
 import static java.util.Objects.nonNull;
 import static maxim.butenko.weather.utils.UrlPath.LOGIN;
 import static maxim.butenko.weather.utils.UrlPath.REGISTRATION;
-
+@Slf4j
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
@@ -28,19 +29,13 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         String uri = req.getRequestURI();
-
-//        HttpSession session = req.getSession();
-//        String loginURI = req.getContextPath() + "/login";
-//
-//        boolean isLoginPage = req.getRequestURI().equals(loginURI);
-//        boolean isAuthenticationPage = req.getRequestURI().contains("/authentication");
-//        boolean isLoggedIn = nonNull(session) &&
-//                nonNull(session.getAttribute("login")) &&
-//                nonNull(session.getAttribute("password"));
+        log.info("Request URI: {}", uri);
 
         if (isUserLoggedIn(req) || isExcludedUrl(uri)) {
+            log.info("Allowing access to: {}", uri);
                 filterChain.doFilter(req, resp);
         } else {
+            log.info("Redirecting to login from URI: {}", uri);
             resp.sendRedirect(LOGIN);
         }
     }
