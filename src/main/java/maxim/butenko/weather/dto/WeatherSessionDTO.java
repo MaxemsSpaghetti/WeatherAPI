@@ -2,6 +2,7 @@ package maxim.butenko.weather.dto;
 
 import lombok.Builder;
 import lombok.Value;
+import maxim.butenko.weather.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,6 +11,6 @@ import java.util.UUID;
 @Builder
 public class WeatherSessionDTO {
     UUID id;
-    Long userId;
+    User user;
     LocalDateTime expiresAt;
 }
