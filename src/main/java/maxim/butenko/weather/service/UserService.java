@@ -1,19 +1,19 @@
 package maxim.butenko.weather.service;
 
-import maxim.butenko.weather.dao.UserDAOImpl;
+import maxim.butenko.weather.dao.UserDAO;
 import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.entity.Role;
 import maxim.butenko.weather.entity.User;
-import org.modelmapper.ModelMapper;
+import maxim.butenko.weather.utils.CustomMapper;
 
 import java.util.Optional;
 
 public class UserService {
     private static final UserService INSTANCE = new UserService();
 
-    private final UserDAOImpl userDAO = UserDAOImpl.getInstance();
+    private final UserDAO userDAO = UserDAO.getInstance();
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+    private static final CustomMapper customMapper = CustomMapper.getInstance();
 
     private UserService() {
 
@@ -23,16 +23,14 @@ public class UserService {
         return INSTANCE;
     }
 
-    public Optional<UserDTO> findByLoginAndPassword(String login, String password) {
-        Optional<User> user = userDAO.findByLoginAndPassword(login, password);
-
-        return Optional.ofNullable(user).map(user1 -> modelMapper.map(user1, UserDTO.class));
+    public Optional<UserDTO> findByLogin(String login) {
+        Optional<User> user = userDAO.findByLogin(login);
+        return Optional.ofNullable(user).map(user1 -> customMapper.convert(user1, UserDTO.class));
     }
 
     public Optional<UserDTO> addUser(String login, String password) {
-        User user = buildUser(login, password);
-        userDAO.add(user);
-        return Optional.ofNullable(user).map(user1 -> modelMapper.map(user1, UserDTO.class));
+        Optional<User> user = userDAO.add(buildUser(login, password));
+        return Optional.ofNullable(user).map(user1 -> customMapper.convert(user1, UserDTO.class));
     }
 
 
