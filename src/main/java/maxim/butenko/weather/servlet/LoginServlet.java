@@ -11,7 +11,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
-import maxim.butenko.weather.entity.WeatherSession;
 import maxim.butenko.weather.service.WeatherSessionService;
 import maxim.butenko.weather.service.UserService;
 import maxim.butenko.weather.utils.HtmlHelper;
@@ -32,13 +31,19 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        String bCryptPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-
-        Optional<UserDTO> optionalUserDTO = userService.findByLoginAndPassword(login, bCryptPassword);
+        Optional<UserDTO> optionalUserDTO = userService.findByLogin(login);
 
         if (optionalUserDTO.isPresent()) {
+            UserDTO userDTO = optionalUserDTO.get();
 
-            Optional<WeatherSessionDTO> optionalWeatherSessionDTO = sessionService.add(optionalUserDTO.get().getId());
+            boolean isValid = BCrypt.verifyer().verify(password.toCharArray(), userDTO.getPassword()).verified;
+
+            if (!isValid) {
+                resp.sendRedirect(HtmlHelper.getHtmlPath(UrlPath.LOGIN));
+                return;
+            }
+
+            Optional<WeatherSessionDTO> optionalWeatherSessionDTO = sessionService.add(userDTO);
 
             if (optionalWeatherSessionDTO.isPresent()) {
 
@@ -52,8 +57,6 @@ public class LoginServlet extends HttpServlet {
                 log.info("User successfully logged in: {}", login);
                 resp.sendRedirect(HtmlHelper.getHtmlPath(UrlPath.WEATHER));
             }
-        } else {
-            resp.sendRedirect(HtmlHelper.getHtmlPath(UrlPath.LOGIN));
         }
     }
 
