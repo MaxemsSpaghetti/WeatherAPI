@@ -3,6 +3,7 @@ package maxim.butenko.weather.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,11 +16,12 @@ import java.util.UUID;
 public class WeatherSession {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     @Column(name = "expires_at")
     private LocalDateTime expiresAt;
