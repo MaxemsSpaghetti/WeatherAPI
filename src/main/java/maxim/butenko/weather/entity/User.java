@@ -3,6 +3,7 @@ package maxim.butenko.weather.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private BigInteger id;
 
     @Column(name = "login")
     private String login;
@@ -22,5 +23,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Transient
     private Role role;
 }
