@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Optional;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
 
         if (optionalUserDTO.isPresent()) {
 
-            Optional<WeatherSessionDTO> optionalWeatherSessionDTO = sessionService.add(optionalUserDTO.get().getId());
+            Optional<WeatherSessionDTO> optionalWeatherSessionDTO = sessionService.add(optionalUserDTO.get());
 
             if (optionalWeatherSessionDTO.isPresent()) {
 
