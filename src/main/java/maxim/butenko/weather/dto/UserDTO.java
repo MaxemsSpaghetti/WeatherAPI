@@ -1,7 +1,6 @@
 package maxim.butenko.weather.dto;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Value;
 import maxim.butenko.weather.entity.Role;
 
