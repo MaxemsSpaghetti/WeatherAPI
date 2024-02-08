@@ -11,18 +11,18 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-public class WeatherSessionService {
+public class SessionService {
 
-   private final SessionDAO sessionDAO = SessionDAO.getInstance();
-    private static final WeatherSessionService INSTANCE = new WeatherSessionService();
+    private final SessionDAO sessionDAO = SessionDAO.getInstance();
+    private static final SessionService INSTANCE = new SessionService();
 
     private static final CustomMapper customMapper = CustomMapper.getInstance();
 
-    public static WeatherSessionService getInstance() {
+    public static SessionService getInstance() {
         return INSTANCE;
     }
 
-    private WeatherSessionService() {
+    private SessionService() {
 
     }
 
@@ -30,7 +30,8 @@ public class WeatherSessionService {
         User user = customMapper.convert(userDTO, User.class);
         WeatherSession session = buildWeatherSession(UUID.randomUUID(), user, LocalDateTime.now().plusDays(1));
         Optional<WeatherSession> weatherSession = sessionDAO.add(session);
-        return Optional.ofNullable(weatherSession).map(weatherSes -> customMapper.convert(weatherSes, WeatherSessionDTO.class));
+        return Optional.ofNullable(weatherSession)
+                .map(weatherSes -> customMapper.convert(weatherSes, WeatherSessionDTO.class));
     }
 
     public Optional<WeatherSessionDTO> findById(UUID id) {
@@ -42,6 +43,8 @@ public class WeatherSessionService {
         sessionDAO.delete(id);
     }
 
+
+
     private WeatherSession buildWeatherSession(UUID id, User user, LocalDateTime expiresAt) {
         return WeatherSession.builder()
                 .id(id)
@@ -49,4 +52,6 @@ public class WeatherSessionService {
                 .expiresAt(expiresAt)
                 .build();
     }
+
+
 }
