@@ -1,20 +1,23 @@
 package maxim.butenko.weather.util;
 
+import maxim.butenko.weather.dto.LocationDTO;
 import maxim.butenko.weather.dto.UserDTO;
 import maxim.butenko.weather.dto.WeatherSessionDTO;
+import maxim.butenko.weather.entity.Location;
 import maxim.butenko.weather.entity.User;
 import maxim.butenko.weather.entity.WeatherSession;
 import org.modelmapper.ModelMapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Optional;
 
 public class CustomMapper extends ModelMapper {
 
     private static final CustomMapper INSTANCE = new CustomMapper();
 
-    public CustomMapper() {
+    private CustomMapper() {
     }
 
 
@@ -63,4 +66,12 @@ public class CustomMapper extends ModelMapper {
                 .build();
     }
 
+    public Location convertLocationDTOToLocation(LocationDTO locationDTO, List<User> users) {
+        return Location.builder()
+                .name(locationDTO.getCity())
+                .users(users)
+                .latitude(locationDTO.getCoordinates().getLatitude())
+                .longitude(locationDTO.getCoordinates().getLongitude())
+                .build();
+    }
 }
