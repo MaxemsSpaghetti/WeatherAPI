@@ -5,7 +5,9 @@ import maxim.butenko.weather.entity.WeatherSession;
 import maxim.butenko.weather.util.HibernateConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,36 +43,53 @@ public class SessionDAO {
     }
 
     public Optional<WeatherSession> findById(UUID id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session hibernateSession = sessionFactory.getCurrentSession();
 
         try {
-            session.beginTransaction();
-            WeatherSession weatherSession = session.get(WeatherSession.class, id);
-            session.getTransaction().commit();
+            hibernateSession.beginTransaction();
+            WeatherSession weatherSession = hibernateSession.get(WeatherSession.class, id);
+            hibernateSession.getTransaction().commit();
 
             return Optional.of(weatherSession);
 
         } catch (Exception e) {
             log.error("An error occurred while finding session by id: {}", e.getMessage(), e);
-            session.getTransaction().rollback();
+            hibernateSession.getTransaction().rollback();
         }
 
         return Optional.empty();
     }
 
     public void delete(UUID id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session hibernateSession = sessionFactory.getCurrentSession();
 
         try {
-            session.beginTransaction();
-            WeatherSession weatherSession = session.get(WeatherSession.class, id);
-            session.delete(weatherSession);
+            hibernateSession.beginTransaction();
+            WeatherSession weatherSession = hibernateSession.get(WeatherSession.class, id);
+            hibernateSession.delete(weatherSession);
 
-            session.getTransaction().commit();
+            hibernateSession.getTransaction().commit();
 
         } catch (Exception e) {
-            log.error("An error occurred while deleting session: {}", e.getMessage(), e);
-            session.getTransaction().rollback();
+            log.error("An error occurred while deleting session by id: {}", e.getMessage(), e);
+            hibernateSession.getTransaction().rollback();
+        }
+    }
+
+    public void deleteByExpiredTime(LocalDateTime time) {
+        Session hibernateSession = sessionFactory.getCurrentSession();
+
+        try {
+            hibernateSession.beginTransaction();
+
+            Query query = hibernateSession.createQuery("DELETE FROM WeatherSession s WHERE s.expiresAt <= :time");
+            query.setParameter("time", time);
+            query.executeUpdate();
+
+            hibernateSession.getTransaction().commit();
+        } catch (Exception e) {
+            log.error("An error occurred while deleting session by expired time: {}", e.getMessage(), e);
+            hibernateSession.getTransaction().rollback();
         }
     }
 }
