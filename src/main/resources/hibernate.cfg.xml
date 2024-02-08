@@ -15,6 +15,7 @@
 
     <mapping class="maxim.butenko.weather.entity.User"/>
     <mapping class="maxim.butenko.weather.entity.WeatherSession"/>
+    <mapping class="maxim.butenko.weather.entity.Location"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
