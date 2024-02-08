@@ -25,33 +25,33 @@ public class UserDAO {
     }
 
     public Optional<User> add(User user) {
-        Session session = sessionFactory.getCurrentSession();
+        Session hibernateSession = sessionFactory.getCurrentSession();
         try {
 
-            session.beginTransaction();
-            session.persist(user);
-            session.getTransaction().commit();
+            hibernateSession.beginTransaction();
+            hibernateSession.persist(user);
+            hibernateSession.getTransaction().commit();
 
             return Optional.of(user);
 
         } catch (Exception e) {
             log.error("An error occurred while adding user: {}", e.getMessage(), e);
             log.error("Stack trace: ", e);
-            session.getTransaction().rollback();
+            hibernateSession.getTransaction().rollback();
         }
         return Optional.empty();
     }
     public Optional<User> findByLogin(String login) {
-        Session session = sessionFactory.getCurrentSession();
+        Session hibernateSession = sessionFactory.getCurrentSession();
         try {
-            session.beginTransaction();
+            hibernateSession.beginTransaction();
 
-            Query<User> query = session.createQuery("SELECT u FROM User u WHERE login = :login", User.class);
+            Query<User> query = hibernateSession.createQuery("SELECT u FROM User u WHERE login = :login", User.class);
 
             query.setParameter("login", login);
             User user = query.uniqueResult();
 
-            session.getTransaction().commit();
+            hibernateSession.getTransaction().commit();
 
             user.setRole(Role.USER);
             return Optional.of(user);
@@ -59,7 +59,7 @@ public class UserDAO {
         } catch (Exception e) {
             log.error("An error occurred while processing login and password: {}", e.getMessage(), e);
             log.error("Stack trace: ", e);
-            session.getTransaction().rollback();
+            hibernateSession.getTransaction().rollback();
         }
 
         return Optional.empty();
