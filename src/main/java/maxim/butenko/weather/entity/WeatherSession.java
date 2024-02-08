@@ -3,7 +3,6 @@ package maxim.butenko.weather.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
