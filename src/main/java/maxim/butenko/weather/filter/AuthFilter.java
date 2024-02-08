@@ -1,25 +1,23 @@
 package maxim.butenko.weather.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import maxim.butenko.weather.dto.UserDTO;
-
+import maxim.butenko.weather.util.CookieHandler;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.Set;
 
-import static java.util.Objects.nonNull;
-import static maxim.butenko.weather.util.UrlPath.LOGIN;
-import static maxim.butenko.weather.util.UrlPath.REGISTRATION;
+import static maxim.butenko.weather.util.UrlPath.SIGN_IN;
+import static maxim.butenko.weather.util.UrlPath.SIGN_UP;
 @Slf4j
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
-    public static final Set<String> EXCLUDED_URLS = Set.of(LOGIN, REGISTRATION);
+    public static final Set<String> EXCLUDED_URLS = Set.of(SIGN_IN, SIGN_UP);
+
+    public static final CookieHandler cookieHandler = CookieHandler.getInstance();
 
     @Override
     public void doFilter(ServletRequest servletRequest,
@@ -46,19 +44,12 @@ public class AuthFilter implements Filter {
     }
 
     private boolean isUserLoggedIn(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-        if (nonNull(cookies)) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("sessionId")) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return cookieHandler.getSessionCookie(req).isPresent();
     }
 
+
     private void reject(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        var prevPage = req.getHeader("referer");
-        resp.sendRedirect(prevPage != null ? prevPage : LOGIN);
+        String prevPage = req.getHeader("referer");
+        resp.sendRedirect(prevPage != null ? prevPage : SIGN_IN);
     }
 }
